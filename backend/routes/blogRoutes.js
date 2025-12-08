@@ -48,7 +48,7 @@ router.get('/author/:userId', async (req, res) => {
 });
 
 // Protected routes (require authentication)
-router.post('/', authenticate, createBlog);
+router.post('/', authenticate, upload.single('image'), createBlog);
 router.put('/:id', authenticate, upload.single('image'), updateBlog);
 router.delete('/:id', authenticate, deleteBlog);
 
