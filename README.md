@@ -70,8 +70,20 @@ npm install
 
 ### 4. Configure Environment Variables
 
-Create a `.env` file in the `backend` directory:
+The backend requires environment variables to run. Follow these steps:
 
+#### Step 1: Copy the example file
+```bash
+cd backend
+cp .env.example .env
+```
+
+#### Step 2: Get actual credentials
+**Contact the project administrator** to get the actual MongoDB URI and JWT Secret values.
+
+#### Step 3: Update your .env file
+
+Open the `.env` file and replace the placeholder values:
 ```env
 PORT=5000
 MONGO_URI=mongodb+srv://your_username:your_password@cluster0.xxxxx.mongodb.net/blogsphere?retryWrites=true&w=majority
@@ -82,22 +94,21 @@ NODE_ENV=development
 **MongoDB Connection String Formats:**
 
 - **For MongoDB Atlas (Cloud):**
-  ```
+```
   mongodb+srv://<username>:<password>@<cluster-url>/<database-name>?retryWrites=true&w=majority
-  ```
+```
   Example: `mongodb+srv://myuser:mypass123@cluster0.abcd123.mongodb.net/blogsphere?retryWrites=true&w=majority`
 
 - **For Local MongoDB:**
-  ```
+```
   mongodb://localhost:27017/blogsphere
-  ```
+```
 
-**Important Notes:**
-- Replace `<username>` and `<password>` with your actual MongoDB credentials
-- Replace `<cluster-url>` with your Atlas cluster URL
-- Replace `<database-name>` with your database name (e.g., `blogsphere`)
-- **Never commit** the `.env` file to Git (it's already in `.gitignore`)
-- Generate a strong JWT secret (at least 32 characters)
+**Important Security Notes:**
+- ⚠️ **NEVER commit the `.env` file to Git** (it's already in `.gitignore`)
+- ✅ The `.env.example` file is safe to commit (contains no real secrets)
+- 🔐 Always get credentials through secure private channels
+- 🔑 Generate a strong JWT secret (at least 32 characters)
 
 ### 5. Run the Application
 
