@@ -129,25 +129,24 @@ if (!fs.existsSync(uploadsDir)) {
 // ==========================
 const allowedOrigins = [
   'http://localhost:3000',
+  'http://localhost:3001',
   'https://blogsphere-sgud.onrender.com',
-  process.env.FRONTEND_URL,
-  /^https:\/\/.*\.vercel\.app$/,  // Allow all Vercel preview deployments
+  'https://blogging-platform-ecru.vercel.app',
+  'https://blogging-platform-git-main-rajalekshmi-rejis-projects.vercel.app',
+  'https://blogging-platform-6255qtymy-rajalekshmi-rejis-projects.vercel.app',
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps, Postman, etc.)
+    // Allow requests with no origin (Postman, mobile apps, etc.)
     if (!origin) return callback(null, true);
     
-    // Check if origin is in allowedOrigins array or matches regex
-    const isAllowed = allowedOrigins.some(allowed => {
-      if (allowed instanceof RegExp) {
-        return allowed.test(origin);
-      }
-      return allowed === origin;
-    });
+    // Check if origin is allowed or matches Vercel pattern
+    const isAllowed = allowedOrigins.includes(origin) || 
+                     /^https:\/\/blogging-platform.*\.vercel\.app$/.test(origin);
     
     if (isAllowed) {
+      console.log('✅ CORS allowed origin:', origin);
       callback(null, true);
     } else {
       console.log('❌ CORS blocked origin:', origin);
