@@ -22,18 +22,20 @@ const createNotification = async (notificationData) => {
 // ============================================
 const createBlog = async (req, res) => {
   try {
-    const { title, content, excerpt, tags, coverImage } = req.body;
+   const { title, content, excerpt, tags } = req.body;
 
-    const blog = new Blog({
-      title,
-      content,
-      excerpt,
-      tags: tags || [],
-      coverImage,
-      author: req.user._id,
-      status: 'draft'
-    });
+// ✅ Get image URL from either Cloudinary or local storage
+const coverImage = req.file ? req.file.path : null;
 
+const blog = new Blog({
+  title,
+  content,
+  excerpt,
+  tags: tags || [],
+  coverImage,
+  author: req.user._id,
+  status: 'draft'
+});
     await blog.save();
     
     res.status(201).json({
@@ -166,9 +168,9 @@ const updateBlog = async (req, res) => {
       }
     }
 
-    // --- Image Upload (multer required) ---
+    // ✅ Handle image from either Cloudinary or local storage
     if (req.file) {
-      blog.coverImage = req.file.path;     // store path
+      blog.coverImage = req.file.path;
     }
 
     blog.updatedAt = Date.now();
