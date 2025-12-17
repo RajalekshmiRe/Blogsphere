@@ -34,7 +34,7 @@ const getApiUrl = () => {
 
 const axiosInstance = axios.create({
   baseURL: getApiUrl(),
-  withCredentials: true,
+  // ✅ REMOVED withCredentials: true - this triggers mDNS permission request
   headers: {
     'Content-Type': 'application/json',
   },
@@ -49,8 +49,10 @@ axiosInstance.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
     
-    // Log request for debugging
-    console.log(`🔵 API Request: ${config.method.toUpperCase()} ${config.baseURL}${config.url}`);
+    // Log request for debugging (only in development)
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`🔵 API Request: ${config.method.toUpperCase()} ${config.baseURL}${config.url}`);
+    }
     
     return config;
   },
@@ -63,7 +65,9 @@ axiosInstance.interceptors.request.use(
 // Response interceptor - Handle errors globally
 axiosInstance.interceptors.response.use(
   (response) => {
-    console.log(`✅ API Response: ${response.config.method.toUpperCase()} ${response.config.url}`);
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`✅ API Response: ${response.config.method.toUpperCase()} ${response.config.url}`);
+    }
     return response;
   },
   (error) => {
