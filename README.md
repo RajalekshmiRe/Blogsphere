@@ -2,6 +2,16 @@
 
 A modern full-stack blogging platform built with the MERN stack, featuring user authentication, rich text editing, and a beautiful responsive interface.
 
+## 🌐 Live Demo
+
+**Experience Blogsphere live!**
+
+🔗 **Frontend Application**: [https://blogging-platform-ecru.vercel.app](https://blogging-platform-ecru.vercel.app)
+
+🔗 **Backend API**: [https://blogsphere-sgud.onrender.com](https://blogsphere-sgud.onrender.com)
+
+---
+
 ## ✨ Features
 
 ### User Authentication
@@ -28,6 +38,7 @@ A modern full-stack blogging platform built with the MERN stack, featuring user 
 - **React Router** - Client-side routing
 - **Tailwind CSS** - Utility-first CSS framework
 - **Axios** - HTTP client for API requests
+- **Deployed on Vercel**
 
 ### Backend
 - **Node.js** - JavaScript runtime
@@ -36,6 +47,7 @@ A modern full-stack blogging platform built with the MERN stack, featuring user 
 - **Mongoose** - MongoDB object modeling
 - **JWT** - JSON Web Tokens for authentication
 - **bcrypt** - Password hashing
+- **Deployed on Render**
 
 ## 📋 Prerequisites
 
@@ -191,6 +203,16 @@ Blogsphere/
 - `GET /api/users/profile` - Get user profile (protected)
 - `PUT /api/users/profile` - Update user profile (protected)
 
+## 🚀 Deployment
+
+This application is deployed and live:
+
+- **Frontend**: Deployed on Vercel with automatic deployments from the main branch
+- **Backend**: Deployed on Render with environment variables securely configured
+- **Database**: MongoDB Atlas for production data storage
+
+Visit the live application at: [https://blogging-platform-ecru.vercel.app](https://blogging-platform-ecru.vercel.app)
+
 ## 🔐 Security Features
 
 - Password hashing with bcrypt
@@ -238,6 +260,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - GitHub: [@RajalekshmiRe](https://github.com/RajalekshmiRe)
 - Repository: [Blogsphere](https://github.com/RajalekshmiRe/Blogsphere)
+- Live Demo: [https://blogging-platform-ecru.vercel.app](https://blogging-platform-ecru.vercel.app)
 
 ## 🙏 Acknowledgments
 
@@ -252,3 +275,5 @@ If you have any questions or need help, please open an issue in the GitHub repos
 ---
 
 ⭐ If you found this project helpful, please give it a star on GitHub!
+
+**Live at**: [https://blogging-platform-ecru.vercel.app](https://blogging-platform-ecru.vercel.app)
