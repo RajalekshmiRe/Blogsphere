@@ -73,7 +73,7 @@
 const express = require('express');
 const router = express.Router();
 const upload = require('../middleware/upload');
-const { 
+const {
   createBlog,
   getBlogs,
   getBlogById,
@@ -89,19 +89,20 @@ const {
 const { authenticate, isAdmin } = require('../middleware/auth');
 const Blog = require('../models/Blog');
 
-// Public routes
+// ==============================
+// PUBLIC ROUTES
+// ==============================
 router.get('/', getBlogs);
-router.get('/:id', getBlogById);
 
-// ✅ Get blogs by author (for user dashboard)
+// ✅ Get blogs by author (MUST be before "/:id")
 router.get('/author/:userId', async (req, res) => {
   try {
     const { userId } = req.params;
-    
+
     const blogs = await Blog.find({ author: userId })
       .populate('author', 'name email')
       .sort({ createdAt: -1 });
-    
+
     res.json({
       success: true,
       data: blogs,
@@ -117,20 +118,34 @@ router.get('/author/:userId', async (req, res) => {
   }
 });
 
-// Protected routes (require authentication)
-router.post('/', authenticate, upload.single('image'), createBlog);
-router.put('/:id', authenticate, upload.single('image'), updateBlog);
+// ✅ Single blog (keep LAST)
+router.get('/:id', getBlogById);
+
+// ==============================
+// PROTECTED ROUTES - ✅ FIXED FIELD NAME
+// ==============================
+// router.post('/', authenticate, upload.single('featuredImage'), createBlog);
+// router.put('/:id', authenticate, upload.single('featuredImage'), updateBlog);
+router.post('/', authenticate, upload, createBlog);
+router.put('/:id', authenticate, upload, updateBlog);
+
 router.delete('/:id', authenticate, deleteBlog);
 
-// Blog actions
+// ==============================
+// BLOG ACTIONS
+// ==============================
 router.post('/:blogId/publish', authenticate, publishBlog);
 router.post('/:blogId/unpublish', authenticate, unpublishBlog);
 
-// Admin only routes
+// ==============================
+// ADMIN ONLY
+// ==============================
 router.post('/:blogId/approve', authenticate, isAdmin, approveBlog);
 router.post('/:blogId/reject', authenticate, isAdmin, rejectBlog);
 
-// Like/Unlike
+// ==============================
+// LIKE / UNLIKE
+// ==============================
 router.post('/:id/like', authenticate, likeBlog);
 router.delete('/:id/like', authenticate, unlikeBlog);
 

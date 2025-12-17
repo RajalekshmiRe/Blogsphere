@@ -597,7 +597,12 @@ router.get('/blogs/:id', protect, admin, async (req, res) => {
 });
 
 // ✅ NEW: PUT - Update blog (for AdminEditBlog)
-router.put('/blogs/:id', protect, admin, upload.single('image'), async (req, res) => {
+router.put(
+  '/blogs/:id',
+  protect,
+  admin,
+  upload,
+  async (req, res) => {
   try {
     const blogId = req.params.id;
     const { title, description, content, category, status, tags } = req.body;
@@ -635,9 +640,12 @@ router.put('/blogs/:id', protect, admin, upload.single('image'), async (req, res
     }
 
     // Handle image upload
-    if (req.file) {
-      blog.image = `/uploads/${req.file.filename}`;
-    }
+    if (req.files?.length) {
+  const file = req.files[0];
+  blog.featuredImage = file.secure_url
+    ? file.secure_url
+    : `/uploads/${file.filename}`;
+}
 
     await blog.save();
 

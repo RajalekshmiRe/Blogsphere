@@ -11,6 +11,9 @@ const blogSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  description: {
+    type: String
+  },
   excerpt: {
     type: String
   },
@@ -26,8 +29,10 @@ const blogSchema = new mongoose.Schema({
   tags: [{
     type: String
   }],
-  coverImage: {
-    type: String
+  // ✅ FIXED: Single field for image with multiple aliases
+  featuredImage: {
+    type: String,
+    default: null
   },
   status: {
     type: String,
@@ -62,6 +67,15 @@ const blogSchema = new mongoose.Schema({
   }
 });
 
+// ✅ ADD: Virtual fields for backward compatibility
+blogSchema.virtual('coverImage').get(function() {
+  return this.featuredImage;
+});
+
+blogSchema.virtual('image').get(function() {
+  return this.featuredImage;
+});
+
 // Virtual for comment count
 blogSchema.virtual('commentCount').get(function() {
   return this.comments ? this.comments.length : 0;
@@ -70,5 +84,11 @@ blogSchema.virtual('commentCount').get(function() {
 // Ensure virtuals are included in JSON
 blogSchema.set('toJSON', { virtuals: true });
 blogSchema.set('toObject', { virtuals: true });
+
+// ✅ ADD: Pre-save hook to update timestamp
+blogSchema.pre('save', function(next) {
+  this.updatedAt = Date.now();
+  next();
+});
 
 module.exports = mongoose.model('Blog', blogSchema);
