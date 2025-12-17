@@ -4,6 +4,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// ✅ Block mDNS permission request popup
+if (typeof window !== 'undefined' && navigator.permissions) {
+  try {
+    navigator.permissions.query({ name: 'local-devices' }).catch(() => {});
+  } catch (e) {
+    // Silently ignore if not supported
+  }
+}
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
