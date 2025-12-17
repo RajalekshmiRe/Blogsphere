@@ -31,34 +31,34 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { ErrorBoundary } from "./components/ErrorBoundary";
 
-// ✅ Block permission popups AFTER imports, inside component
 function App() {
-  // Block all permission requests on mount
+  // Block permission popups on mount
   React.useEffect(() => {
-    if (typeof window !== 'undefined') {
-      // Intercept permission queries
-      const originalQuery = navigator.permissions?.query;
-      if (originalQuery) {
-        navigator.permissions.query = (parameters) => {
-          return Promise.resolve({
-            state: Notification.permission
-          });
-        };
-      }
+    // Prevent mDNS local network scanning
+    if (navigator.permissions?.query) {
+      const originalQuery = navigator.permissions.query.bind(navigator.permissions);
+      navigator.permissions.query = async (descriptor) => {
+        if (descriptor.name === 'local-network' || descriptor.name === 'local-devices') {
+          return Promise.resolve({ state: 'denied', onchange: null });
+        }
+        return originalQuery(descriptor);
+      };
+    }
 
-      // Block webcam/microphone access
-      if (navigator.mediaDevices) {
-        navigator.mediaDevices.getUserMedia = () => {
-          return Promise.reject(new Error('Permission denied'));
-        };
-      }
+    // Block media device access
+    if (navigator.mediaDevices?.getUserMedia) {
+      const originalGetUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+      navigator.mediaDevices.getUserMedia = () => {
+        return Promise.reject(new DOMException('Permission denied', 'NotAllowedError'));
+      };
+    }
 
-      // Block geolocation
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition = () => {
-          return Promise.reject(new Error('Permission denied'));
-        };
-      }
+    // Block geolocation
+    if (navigator.geolocation?.getCurrentPosition) {
+      const originalGetPosition = navigator.geolocation.getCurrentPosition;
+      navigator.geolocation.getCurrentPosition = () => {
+        // Do nothing - silently fail
+      };
     }
   }, []);
 
