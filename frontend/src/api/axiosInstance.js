@@ -17,24 +17,13 @@
 
 
 
-
-
 import axios from "axios";
 
-// Determine API URL based on environment
-const getApiUrl = () => {
-  // If REACT_APP_API_URL is set in .env, use it
-  if (process.env.REACT_APP_API_URL) {
-    return process.env.REACT_APP_API_URL;
-  }
-  
-  // Default to localhost for development
-  return "http://localhost:5000/api";
-};
+// ✅ ALWAYS use production URL - NEVER localhost
+const API_BASE_URL = process.env.REACT_APP_API_URL || "https://blogsphere-sgud.onrender.com/api";
 
 const axiosInstance = axios.create({
-  baseURL: getApiUrl(),
-  // ✅ REMOVED withCredentials: true - this triggers mDNS permission request
+  baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
