@@ -1099,6 +1099,7 @@ const createNotification = async (notificationData) => {
   }
 };
 
+
 // ============================================
 // HELPER: Process uploaded image
 // ============================================
@@ -1110,28 +1111,22 @@ const getImagePath = (file) => {
 
   console.log('🔍 Processing file:', file);
 
-  // Cloudinary
-  if (file.secure_url) {
-    console.log('✅ Using Cloudinary URL:', file.secure_url);
-    return file.secure_url;
+  // ✅ CLOUDINARY (Production)
+  if (file.path && file.path.startsWith('http')) {
+    console.log('✅ Using Cloudinary URL:', file.path);
+    return file.path;
   }
 
-  // Local storage
+  // ✅ LOCAL STORAGE (Development)
   if (file.filename) {
-    const baseUrl =
-      process.env.NODE_ENV === 'production'
-        ? (process.env.BACKEND_URL || 'https://blogsphere-sgud.onrender.com')
-        : 'http://localhost:5000';
-
-    const imagePath = `/uploads/${file.filename}`;
-    console.log('✅ Using local path:', imagePath);
-    return imagePath;
+    const localPath = `/uploads/${file.filename}`;
+    console.log('✅ Using local path:', localPath);
+    return localPath;
   }
 
-  console.log('❌ File has no secure_url or filename');
+  console.log('❌ File has no path or filename');
   return null;
 };
-
 // ============================================
 // CREATE BLOG
 // ============================================
