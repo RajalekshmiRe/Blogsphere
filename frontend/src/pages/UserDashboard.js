@@ -439,20 +439,25 @@ export default function UserDashboard() {
                 >
                   {/* Featured Image Thumbnail */}
                   {blog.featuredImage && (
-                    <img
-                      src={`http://localhost:5000${blog.featuredImage}`}
-                      alt={blog.title}
-                      onError={(e) => {
-                        e.target.style.display = 'none';
-                      }}
-                      style={{
-                        width: '120px',
-                        height: '80px',
-                        objectFit: 'cover',
-                        borderRadius: '6px',
-                        flexShrink: 0
-                      }}
-                    />
+                    // ✅ NEW CODE (USE THIS):
+<img
+  src={
+    blog.featuredImage?.startsWith('http') 
+      ? blog.featuredImage
+      : `${process.env.REACT_APP_API_URL?.replace('/api', '') || 'https://blogsphere-sgud.onrender.com'}${blog.featuredImage}`
+  }
+  alt={blog.title}
+  onError={(e) => {
+    e.target.style.display = 'none';
+  }}
+  style={{
+    width: '120px',
+    height: '80px',
+    objectFit: 'cover',
+    borderRadius: '6px',
+    flexShrink: 0
+  }}
+/>
                   )}
 
                   <div style={{
