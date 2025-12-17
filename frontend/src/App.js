@@ -1,4 +1,3 @@
-// frontend/src/App.js
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
@@ -32,7 +31,37 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { ErrorBoundary } from "./components/ErrorBoundary";
 
+// ✅ Block permission popups AFTER imports, inside component
 function App() {
+  // Block all permission requests on mount
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // Intercept permission queries
+      const originalQuery = navigator.permissions?.query;
+      if (originalQuery) {
+        navigator.permissions.query = (parameters) => {
+          return Promise.resolve({
+            state: Notification.permission
+          });
+        };
+      }
+
+      // Block webcam/microphone access
+      if (navigator.mediaDevices) {
+        navigator.mediaDevices.getUserMedia = () => {
+          return Promise.reject(new Error('Permission denied'));
+        };
+      }
+
+      // Block geolocation
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition = () => {
+          return Promise.reject(new Error('Permission denied'));
+        };
+      }
+    }
+  }, []);
+
   return (
     <AuthProvider>
       <Router>
