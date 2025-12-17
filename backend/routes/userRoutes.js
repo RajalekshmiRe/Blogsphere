@@ -1,20 +1,3 @@
-// const express = require('express');
-// const router = express.Router();
-// const {
-//   getUserProfile,
-//   updateProfile,
-//   getMyBlogs
-// } = require('../controllers/userController');
-// const { protect } = require('../middleware/auth');
-
-// router.get('/profile', protect, updateProfile);
-// router.put('/profile', protect, updateProfile);
-// router.get('/my-blogs', protect, getMyBlogs);
-// router.get('/:id', getUserProfile);
-
-// module.exports = router;
-
-
 // routes/userRoutes.js
 const express = require('express');
 const router = express.Router();
