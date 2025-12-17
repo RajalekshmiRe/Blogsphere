@@ -257,30 +257,38 @@ export default function ViewBlog() {
             </div>
           </div>
 
-          {/* Featured Image - NEWLY ADDED */}
-          {blog.featuredImage && (
-            <div style={{
-              marginBottom: '32px',
-              borderRadius: '8px',
-              overflow: 'hidden'
-            }}>
-              <img
-                src={`http://localhost:5000${blog.featuredImage}`}
-                alt={blog.title}
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                  console.error('Failed to load image:', blog.featuredImage);
-                }}
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  maxHeight: '500px',
-                  objectFit: 'cover',
-                  display: 'block'
-                }}
-              />
-            </div>
-          )}
+         // In ViewBlog.js, replace the Featured Image section with this:
+
+{/* Featured Image - FIXED for Cloudinary + Local */}
+{blog.featuredImage && (
+  <div style={{
+    marginBottom: '32px',
+    borderRadius: '8px',
+    overflow: 'hidden'
+  }}>
+    <img
+      src={
+        // ✅ If it's already a full URL (Cloudinary), use it as-is
+        blog.featuredImage.startsWith('http') 
+          ? blog.featuredImage
+          // ✅ If it's a local path, prepend the backend URL
+          : `${process.env.REACT_APP_API_URL?.replace('/api', '') || 'http://localhost:5000'}${blog.featuredImage}`
+      }
+      alt={blog.title}
+      onError={(e) => {
+        e.target.style.display = 'none';
+        console.error('Failed to load image:', blog.featuredImage);
+      }}
+      style={{
+        width: '100%',
+        height: 'auto',
+        maxHeight: '500px',
+        objectFit: 'cover',
+        display: 'block'
+      }}
+    />
+  </div>
+)}
 
           {/* Action Buttons */}
           <div style={{
