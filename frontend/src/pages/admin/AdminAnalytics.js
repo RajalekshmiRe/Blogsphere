@@ -125,6 +125,7 @@ export default function AdminAnalytics() {
             </div>
           </div>
 
+          {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg p-6 text-white">
               <div className="flex items-center justify-between mb-4">
@@ -167,7 +168,6 @@ export default function AdminAnalytics() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
                   </svg>
                 </div>
-                <span className="text-sm font-medium bg-white/20 px-3 py-1 rounded-full">Soon</span>
               </div>
               <h3 className="text-sm font-medium mb-1 opacity-90">Total Comments</h3>
               <p className="text-3xl font-bold">{stats.totalComments || 0}</p>
@@ -181,13 +181,13 @@ export default function AdminAnalytics() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                   </svg>
                 </div>
-                <span className="text-sm font-medium bg-white/20 px-3 py-1 rounded-full">Soon</span>
               </div>
               <h3 className="text-sm font-medium mb-1 opacity-90">Total Views</h3>
               <p className="text-3xl font-bold">{stats.totalViews || '0'}</p>
             </div>
           </div>
 
+          {/* Charts */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
             <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-3">
@@ -246,6 +246,7 @@ export default function AdminAnalytics() {
             </div>
           </div>
 
+          {/* Bottom Stats */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
               <h3 className="text-lg font-bold text-gray-900 mb-4">User Activity</h3>
