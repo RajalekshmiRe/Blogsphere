@@ -75,11 +75,11 @@ A modern full-stack blogging platform built with the MERN stack, featuring user 
 
 ![Blog Detail](screenshots/blog_detail.png)
 
-![All Blogs](screenshots/all-blogs.png)
+![All Blogs](screenshots/all_blogs.png)
 
 ### 🛠️ Admin Dashboard
 
-![Admin Dashboard](screenshots/admin-dashboard.png)
+![Admin Dashboard](screenshots/admin_dashboard.png)
 
 ![Admin Panel](screenshots/admin_panel.png)
 
